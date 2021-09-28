@@ -9,7 +9,6 @@ print(run_path)
 @apt.route('/', defaults={'path': ''}, host="apt.jakedolan.net")
 @apt.route('/<path:path>', host="apt.jakedolan.net")
 def catch_all(path):
-    print("YES")
     full_path = "{}/static/{}".format(run_path, path)
     if os.path.isdir(full_path):
         files = os.listdir(full_path)
