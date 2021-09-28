@@ -1,21 +1,14 @@
-import flask
+from flask import Flask
+from sites.www_redir.main import www_redir
+from sites.www.main import www
+from sites.apt.main import apt
+
+app = Flask(__name__, static_url_path='')
+app.url_map.host_matching = True
+
+app.register_blueprint(www_redir)
+app.register_blueprint(www)
+app.register_blueprint(apt)
 
 
-app = flask.Flask(__name__, static_url_path='')
-accepted_files = []
 
-@app.route("/")
-def HOME():
-    return app.send_static_file("index.html")
-
-@app.route("/<f>")
-def GET(f):
-    f = "{}.html".format(f)
-    print(f)
-    if not f in accepted_files:
-        return app.send_static_file('html/{}'.format(f))
-    
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0")
